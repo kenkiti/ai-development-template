@@ -1,0 +1,22 @@
+# Operating-system and editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Logs and temporary artifacts
+*.log
+tmp/
+temp/
+coverage/
+
+# Language-specific entries should be added by each project.
