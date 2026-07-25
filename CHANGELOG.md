@@ -10,6 +10,8 @@ The format follows Keep a Changelog, and version numbers follow Semantic Version
 
 ### Changed
 
+- `docs/HANDOFF.md`に、Claude経由のCodexで発生するWindows PowerShell 7起動問題と停止・復旧手順を記録。
+
 ### Fixed
 
 ## [1.0.0] - 2026-07-21
