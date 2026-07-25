@@ -11,6 +11,12 @@ Shared workflow for repositories using Claude Code as orchestrator and Codex as 
 
 Do not resolve conflicts by guessing, silently changing scope, or using destructive operations.
 
+## Documentation language
+
+- Write files read directly by AI agents, including `CLAUDE.md`, `AGENTS.md`, and this `DEVELOPMENT.md`, in English.
+- Write human-facing documents, including `README.md` and `docs/HANDOFF.md`, in Japanese.
+- `DESIGN.md` and ADRs may follow the project's established design language because they serve both human readers and AI agents.
+
 ## 2. Operating principles
 
 - Default to safe autonomous execution.
@@ -120,7 +126,8 @@ inspect repository state
 → quality score /100
 → below 90 or critical defect: return evidence to the same Codex thread
 → update documentation and durable learning
-→ commit and push the task branch
+→ automatically commit the reviewed task changes
+→ push only when the user explicitly requests it
 → merge or retain worktree according to project policy
 ```
 
@@ -318,7 +325,7 @@ A task is done only when all applicable conditions are true:
 - quality score is at least 90/100;
 - no temporary debug code, unresolved placeholder, or accidental generated file remains;
 - relevant documentation is updated;
-- intended changes are committed and pushed according to project policy;
+- intended changes are committed; push only when explicitly authorized;
 - remaining risks and unverified environments are explicit.
 
 A task is not done merely because code was written, a build passed, or an agent said it was complete.
@@ -330,10 +337,10 @@ After the quality gate passes:
 1. update required documentation;
 2. confirm only intended changes remain;
 3. commit using the convention in `CLAUDE.md`;
-4. push the task branch to the configured remote;
+4. push the task branch only when the user explicitly authorizes it;
 5. report branch, commit hash, push status, and verification evidence.
 
-Commit and push completed phases without asking unless the user says otherwise. Do not merge into the base branch without permission under the configured merge policy.
+Commit completed phases without asking after the quality gate passes. Push requires the user's explicit authorization. Do not merge into the base branch without permission under the configured merge policy.
 
 Remove a worktree only after its branch is merged or explicitly abandoned and `git status --short` is empty. Never force-remove a dirty worktree. Branch deletion follows project policy and is separate from worktree removal.
 

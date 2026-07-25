@@ -60,7 +60,8 @@ Claude Code inspects repository state
 → Claude Code independently verifies the actual diff and behavior
 → score 90/100 or higher with no critical defect
 → update documentation
-→ commit and push the task branch
+→ automatically commit the reviewed task changes
+→ push only when the user explicitly requests it
 ```
 
 既定は直列運用です。

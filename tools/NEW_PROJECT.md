@@ -271,8 +271,9 @@ Get-ChildItem -Recurse -File |
 ```powershell
 git add README.md CLAUDE.md DESIGN.md docs/HANDOFF.md
 git commit -m "Initialize project from development template"
-git push
 ```
+
+初期commitは自動で実行してよい。`git push`はユーザーが明示的に依頼した場合だけ実行する。
 
 追加で編集したファイルがある場合は、内容を確認してから明示的に追加する。
 

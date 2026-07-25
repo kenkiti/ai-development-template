@@ -1,71 +1,71 @@
 # HANDOFF.md
 
-Current execution state and durable project learning. Keep this document concise, current, deduplicated, and evidence-based.
+現在の実行状態と、将来の作業に役立つ恒久的な知識を記録する。簡潔で、最新かつ重複のない、証拠に基づく内容に保つ。
 
-Do not use this file as a chronological chat log. Information already obvious from code, Git history, or `DESIGN.md` does not need to be repeated.
+このファイルを時系列のチャットログにしない。コード、Git履歴、`DESIGN.md`から明らかな情報は繰り返し記録しない。
 
-## 1. Current status
+## 1. 現在の状態
 
-- Current phase: <phase>
-- Active task: <task or none>
-- Task branch: `<branch or none>`
+- 現在のフェーズ: <phase>
+- 作業中のタスク: <task or none>
+- タスクブランチ: `<branch or none>`
 - Worktree: `<absolute path or none>`
-- Last completed milestone: <milestone>
-- Next safe action: <single concrete next action>
-- Last updated: <YYYY-MM-DD>
+- 最後に完了したMilestone: <milestone>
+- 次に安全に実行できる作業: <single concrete next action>
+- 最終更新日: <YYYY-MM-DD>
 
-## 2. Verification matrix
+## 2. 検証マトリクス
 
-| Area / requirement | Status | Evidence | Last checked |
+| 領域 / 要件 | 状態 | 証拠 | 最終確認日 |
 |---|---|---|---|
 | <item> | PASS / FAIL / UNVERIFIED / NOT APPLICABLE | <command, output, screenshot, artifact, or reason> | <date> |
 
-## 3. Known issues and technical debt
+## 3. 既知の問題と技術的負債
 
-| ID | Issue | Impact | Evidence | Next action | Status |
+| ID | 問題 | 影響 | 証拠 | 次の対応 | 状態 |
 |---|---|---|---|---|---|
 | KI-001 | <issue> | <impact> | <evidence> | <action> | Open / Deferred / Resolved |
 
-## 4. Durable facts
+## 4. 恒久的な事実
 
-Facts that are verified, project-specific, not obvious from the code, and likely to matter in future sessions.
+検証済みで、プロジェクト固有であり、コードからは明らかでなく、今後のセッションで重要になる事実だけを記録する。
 
 - **FACT-001** — <fact>  
-  Evidence: <source, command, file, or observed behavior>  
-  Verified: <YYYY-MM-DD>
+  証拠: <source, command, file, or observed behavior>
+  確認日: <YYYY-MM-DD>
 
-## 5. Durable policies
+## 5. 恒久的な方針
 
-Rules that should change future implementation or verification decisions.
+今後の実装や検証の判断を変えるルールを記録する。
 
 - **POLICY-001** — <decision rule>  
-  Reason: <why this policy exists>  
-  Applies to: <scope>
+  理由: <why this policy exists>
+  適用範囲: <scope>
 
-## 6. Recurring bug patterns
+## 6. 再発するバグパターン
 
-Only record patterns observed more than once, or a single severe pattern with clear future value.
+複数回観測したパターン、または将来に明確な価値がある重大なパターンだけを記録する。
 
 - **PATTERN-001** — <pattern>  
-  Symptom: <observable failure>  
-  Cause: <verified cause or clearly labeled inference>  
-  Prevention: <instruction, test, or check that prevents recurrence>  
-  Evidence: <issues, commits, logs, or files>  
-  Last observed: <YYYY-MM-DD>
+  症状: <observable failure>
+  原因: <verified cause or clearly labeled inference>
+  再発防止: <instruction, test, or check that prevents recurrence>
+  証拠: <issues, commits, logs, or files>
+  最終確認日: <YYYY-MM-DD>
 
-## 7. Resolved or superseded items
+## 7. 解決済みまたは置き換え済みの項目
 
-Keep only items whose history still explains a current constraint or prevents repeated investigation.
+現在の制約を説明したり、同じ調査の繰り返しを防いだりする項目だけを残す。
 
-- <YYYY-MM-DD> — <item> — Resolved/Superseded by <decision, fix, or ADR>
+- <YYYY-MM-DD> — <item> — <decision, fix, or ADR> により解決 / 置換
 
-## 8. Session close checklist
+## 8. セッション終了チェックリスト
 
-- [ ] Current status and next safe action are accurate.
-- [ ] Verification evidence and unverified items are recorded.
-- [ ] Known issues contain no duplicates.
-- [ ] New durable facts are supported by evidence.
-- [ ] New policies are actionable rather than descriptive.
-- [ ] Recurring patterns include prevention, not only symptoms.
-- [ ] False or obsolete current information was corrected.
-- [ ] Routine progress noise was not added.
+- [ ] 現在の状態と次の安全な作業が正確である。
+- [ ] 検証済みの証拠と未検証の項目を記録した。
+- [ ] 既知の問題に重複がない。
+- [ ] 新しい恒久的事実を証拠で裏付けた。
+- [ ] 新しい方針が説明ではなく実行可能な内容になっている。
+- [ ] 再発パターンに症状だけでなく防止策を記載した。
+- [ ] 誤った情報や古い情報を修正した。
+- [ ] 日常的な進捗ノイズを追加していない。

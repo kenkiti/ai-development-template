@@ -23,7 +23,7 @@ Cross-agent entry point for this repository. Keep this file short. The detailed 
 
 ## Role boundary
 
-- **Claude Code** orchestrates repository state, worktrees, delegation, verification, documentation, commits, and pushes.
+- **Claude Code** orchestrates repository state, worktrees, delegation, verification, documentation, and commits; push remains user-controlled.
 - **Codex** implements the assigned scope and performs the first review of its own final diff in the same thread.
 - Codex must not create, switch, merge, rename, or delete branches or worktrees.
 
