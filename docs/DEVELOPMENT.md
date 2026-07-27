@@ -13,9 +13,10 @@ Do not resolve conflicts by guessing, silently changing scope, or using destruct
 
 ## Documentation language
 
-- Write files read directly by AI agents, including `CLAUDE.md`, `AGENTS.md`, and this `DEVELOPMENT.md`, in English.
-- Write human-facing documents, including `README.md` and `docs/HANDOFF.md`, in Japanese.
-- `DESIGN.md` and ADRs may follow the project's established design language because they serve both human readers and AI agents.
+- Always-loaded agent instruction files (`AGENTS.md`, `CLAUDE.md`, and `docs/DEVELOPMENT.md`) should be written primarily in English.
+- Human-operated runbooks and status documents (`tools/NEW_PROJECT.md`, `tools/UPDATE_TEMPLATE.md`, `tools/RELEASE.md`, and `docs/HANDOFF.md`) may be written in Japanese.
+- Shared design documents (`DESIGN.md` and `docs/ADR/`) may use the language established by the project.
+- Do not translate command names or file paths. Keep status values and the main completion-report keys consistent across documents. Japanese runbooks do not need to be translated wholesale.
 
 ## 2. Operating principles
 
@@ -72,8 +73,24 @@ This section is the single source of truth for invoking Codex CLI. The version-s
 - A standard invocation is:
 
   ```powershell
-  codex exec -C <absolute-worktree-path> --sandbox workspace-write
+  codex exec `
+    -C "<absolute-worktree-path>" `
+    --sandbox workspace-write `
+    "<implementation-prompt>"
   ```
+
+- For a long prompt, save the prompt to a file and pass it through standard input:
+
+  ```powershell
+  Get-Content -Raw "<prompt-file>" |
+    codex exec `
+      -C "<absolute-worktree-path>" `
+      --sandbox workspace-write `
+      -
+  ```
+
+- Long prompts embedded directly in a PowerShell command are prone to quoting, newline, and special-character errors. Prefer a prompt file or standard input. `-C` must name the assigned worktree's absolute path, and Codex must not edit outside that worktree.
+- When Codex CLI is upgraded, verify the actual `codex exec --help` output. Keep version-specific flags in this section only and do not duplicate them in other workflow sections.
 
 - A sandbox restriction is an implementation constraint to work through, not a reason to hand implementation back to Claude Code. Codex continues implementing within the assigned worktree and reports the exact constraint and any unverified checks.
 - Claude Code owns host-side verification that requires the Windows machine, PowerShell, GUI, or hardware. This division does not transfer implementation ownership: Claude Code verifies the host result and returns concrete defects to the same Codex thread when needed.
@@ -102,7 +119,8 @@ Examples that normally do not require confirmation:
 - running approved local build/test commands;
 - reusing the task branch, worktree, and Codex thread;
 - creating a task branch/worktree according to the configured policy;
-- committing and pushing a completed phase according to project policy.
+- committing a completed phase according to project policy when the quality gate passes;
+- pushing only when the specific push has already been explicitly authorized by the user.
 
 ### 4.2 Stop the affected action and escalate
 
@@ -142,9 +160,10 @@ inspect repository state
 → quality score /100
 → below 90 or critical defect: return evidence to the same Codex thread
 → update documentation and durable learning
-→ automatically commit the reviewed task changes
-→ push only when the user explicitly requests it
-→ merge or retain worktree according to project policy
+→ commit according to project policy
+→ push only when the specific push has already been explicitly authorized by the user
+→ merge only when explicitly authorized and permitted by project policy
+→ retain or clean up the worktree according to project policy
 ```
 
 Do not create another implementation thread, branch, or worktree because review found defects. Add a separate reviewer only for high-risk work or an explicit user request.
@@ -341,7 +360,8 @@ A task is done only when all applicable conditions are true:
 - quality score is at least 90/100;
 - no temporary debug code, unresolved placeholder, or accidental generated file remains;
 - relevant documentation is updated;
-- intended changes are committed; push only when explicitly authorized;
+- intended changes are committed according to project policy;
+- push, merge, tag push, and GitHub Release actions are only performed with the required explicit authorization;
 - remaining risks and unverified environments are explicit.
 
 A task is not done merely because code was written, a build passed, or an agent said it was complete.
@@ -352,11 +372,13 @@ After the quality gate passes:
 
 1. update required documentation;
 2. confirm only intended changes remain;
-3. commit using the convention in `CLAUDE.md`;
-4. push the task branch only when the user explicitly authorizes it;
-5. report branch, commit hash, push status, and verification evidence.
+3. commit using the convention in `CLAUDE.md`, according to project policy;
+4. push only when the specific push has already been explicitly authorized by the user;
+5. merge only when explicitly authorized and permitted by project policy;
+6. push tags only with explicit authorization, and create a GitHub Release only when explicitly requested;
+7. report branch, commit hash, push status, and verification evidence.
 
-Commit completed phases without asking after the quality gate passes. Push requires the user's explicit authorization. Do not merge into the base branch without permission under the configured merge policy.
+Commit after the quality gate passes according to project policy. Do not reuse authorization from another task or branch. Push requires authorization for that specific push.
 
 Remove a worktree only after its branch is merged or explicitly abandoned and `git status --short` is empty. Never force-remove a dirty worktree. Branch deletion follows project policy and is separate from worktree removal.
 

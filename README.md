@@ -19,6 +19,12 @@ project/
 ├── CLAUDE.md
 ├── DESIGN.md
 ├── CHANGELOG.md
+├── LICENSE
+├── tools/
+│   ├── NEW_PROJECT.md
+│   ├── UPDATE_TEMPLATE.md
+│   ├── RELEASE.md
+│   └── init-project.ps1
 └── docs/
     ├── DEVELOPMENT.md
     ├── HANDOFF.md
@@ -40,17 +46,23 @@ project/
 | `docs/HANDOFF.md` | 現在の状態、検証証拠、未解決事項、再発防止の学び |
 | `docs/ADR/` | 重要な設計判断と、その理由・影響 |
 | `docs/research/` | 調査、比較、技術検証、根拠資料 |
+| `tools/NEW_PROJECT.md` | テンプレートから新規リポジトリを作成し、初期化する手順 |
+| `tools/UPDATE_TEMPLATE.md` | 共通テンプレートの更新を既存プロジェクトへ安全に反映する手順 |
+| `tools/RELEASE.md` | テンプレートのバージョン確定、CHANGELOG、タグおよび公開手順 |
+| `tools/init-project.ps1` | 新規プロジェクト作成時の機械的な事前確認と初期化補助 |
 
 ## Usage
 
 1. GitHubでこのリポジトリをTemplate repositoryとして設定するか、内容を新規プロジェクトへコピーします。
-2. `CLAUDE.md`のすべての`<placeholder>`を実際の値へ置き換えます。
+2. `CLAUDE.md`の分類付きTBDを、実装開始またはリリースの前提に従って解消します。
 3. `DESIGN.md`へ最初の設計とスコープを記載します。
 4. `docs/HANDOFF.md`へ現在の状態と最初の次アクションを記載します。
 5. 不要な例や適用しない項目を削除します。
 6. AIへ実装を依頼する前に、ビルド・テストコマンドが実際に動くことを確認します。
 
-この公開リポジトリは読み取り・配布用のテンプレートです。ChatGPTのGitHubアプリはリポジトリを書き換えないため、実装にはCodex CLI、Codex Cloud、または通常のGitクライアントを使用してください。公開前に、生成したプロジェクトへ秘密情報、個人情報、内部の検証記録を持ち込まないことも確認してください。
+この公開リポジトリはテンプレートの配布元です。リポジトリへの変更は、使用するツールの能力ではなく、本テンプレートで定めた承認ルール、Git運用ルール、変更範囲に従って制御します。
+
+生成先では、`docs/DEVELOPMENT.md`を残し、`tools/`はテンプレート保守および新規作成用として扱います。テンプレート更新を生成先でも行う場合は`tools/`を残し、行わない場合は次の明示した一覧を初期化完了後に削除できます: `tools/NEW_PROJECT.md`、`tools/UPDATE_TEMPLATE.md`、`tools/RELEASE.md`、`tools/init-project.ps1`。推測で他のファイルを削除しないでください。
 
 ## Core workflow
 
@@ -62,8 +74,8 @@ Claude Code inspects repository state
 → Claude Code independently verifies the actual diff and behavior
 → score 90/100 or higher with no critical defect
 → update documentation
-→ automatically commit the reviewed task changes
-→ push only when the user explicitly requests it
+→ commit according to project policy
+→ push only when the specific push has already been explicitly authorized
 ```
 
 既定は直列運用です。
@@ -76,7 +88,8 @@ one task = one branch = one worktree = one Codex thread
 
 ## First customization checklist
 
-- [ ] `CLAUDE.md`のプレースホルダーをすべて置換した
+- [ ] `TBD-REQUIRED-BEFORE-IMPLEMENTATION`が残っていない
+- [ ] リリース前に`TBD-REQUIRED-BEFORE-RELEASE`を解消した
 - [ ] base branch、worktree root、branch prefixを指定した
 - [ ] build、targeted test、full test、lint、E2Eのコマンドを指定した
 - [ ] 本番API、実データ、破壊的テストの制限を指定した
@@ -89,6 +102,14 @@ one task = one branch = one worktree = one Codex thread
 ## Maintenance policy
 
 このテンプレートへ追加するルールは、複数プロジェクトで再利用できるものに限定します。個別プロジェクトのコマンドや制約は、そのプロジェクトの`CLAUDE.md`へ置きます。
+
+未確定値は次の形式で分類します。`TBD-REQUIRED-BEFORE-IMPLEMENTATION`は実装開始前、`TBD-REQUIRED-BEFORE-RELEASE`は公開・配布・デプロイ前に確定必須です。`TBD-OPTIONAL`は適用しない場合に削除できます。不明なコマンドを推測して記載しません。
+
+```powershell
+Get-ChildItem -Recurse -File |
+  Where-Object { $_.FullName -notmatch '[\\/]\.git[\\/]' } |
+  Select-String -Pattern '<[^>]+>|TBD-REQUIRED-BEFORE-IMPLEMENTATION|TBD-REQUIRED-BEFORE-RELEASE|TBD-OPTIONAL|ai-development-template'
+```
 
 ルールを追加する前に、次を確認します。
 
@@ -106,3 +127,5 @@ one task = one branch = one worktree = one Codex thread
 - MAJOR: 役割分担、ファイル責務、標準フローの非互換変更
 
 変更内容は`CHANGELOG.md`へ記録します。
+
+ライセンスは[MIT License](LICENSE)です。テンプレートを利用する生成先のライセンスと公開範囲は、各プロジェクトで決定してください。
