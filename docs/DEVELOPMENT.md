@@ -38,7 +38,7 @@ Claude Code owns:
 - branch/worktree creation or reuse;
 - Codex delegation and thread continuity;
 - inspection of the applied diff;
-- build, test, lint, integration, E2E, and real-machine verification;
+- build, test, lint, integration, E2E, and host-side verification, including Windows, PowerShell, GUI, and hardware checks;
 - quality scoring and defect feedback;
 - documentation updates;
 - commit, push, merge coordination, and safe cleanup.
@@ -62,6 +62,22 @@ Codex must not:
 - change the user's machine or global configuration;
 - use force push, `git reset --hard`, forced checkout, or forced worktree removal;
 - hide failed checks or describe unverified behavior as complete.
+
+### 3.3 Codex CLI execution contract
+
+This section is the single source of truth for invoking Codex CLI. The version-specific details below are the baseline for Codex CLI 0.145.0 and later compatible releases; when upgrading Codex CLI, verify the installed help output and update this section if the interface changes.
+
+- `codex exec` is non-interactive. Do not pass `--ask-for-approval`; that option is not available for this command.
+- Use `--sandbox workspace-write` as the standard execution mode. Do not use `--dangerously-bypass-approvals-and-sandbox`.
+- A standard invocation is:
+
+  ```powershell
+  codex exec -C <absolute-worktree-path> --sandbox workspace-write
+  ```
+
+- A sandbox restriction is an implementation constraint to work through, not a reason to hand implementation back to Claude Code. Codex continues implementing within the assigned worktree and reports the exact constraint and any unverified checks.
+- Claude Code owns host-side verification that requires the Windows machine, PowerShell, GUI, or hardware. This division does not transfer implementation ownership: Claude Code verifies the host result and returns concrete defects to the same Codex thread when needed.
+- Do not copy version-specific CLI flags into other workflow sections. Keep future CLI changes isolated here and prefer capability checks such as `codex exec --help` over assuming a particular minor-version interface.
 
 ## 4. Autonomous execution and escalation
 

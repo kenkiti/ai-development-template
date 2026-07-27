@@ -25,7 +25,7 @@ local_parent: <absolute parent directory>
 project_name: market-signal-system
 description: MARKETSPEED RSSを利用したリアルタイム市場監視システム
 visibility: private
-local_parent: C:\Users\tadashi\Github
+local_parent: C:\Users\<username>\Github
 ```
 
 ---

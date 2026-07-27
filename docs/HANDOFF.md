@@ -24,7 +24,7 @@
 
 | ID | 問題 | 影響 | 証拠 | 次の対応 | 状態 |
 |---|---|---|---|---|---|
-| KI-001 | ClaudeからWindows版Codex CLIを起動した際、PowerShell 7のセッション起動に失敗することがある | Codexプロセスが実装を開始せず、Claude側の監視が長時間継続する | `Windows error 1312`、`CreateProcessAsUserW failed`、PowerShell session startup failure。直接のPowerShellから同じ作業ディレクトリで実行したread-only smoke testは成功 | 同じエラーが2回発生した時点でリトライを止める。Codexのプロセス状態、ログ時刻、worktreeを確認し、必要に応じてCodex一時ディレクトリの権限を修復するかWSL2実行へ切り替える | Open |
+| <KI-ID> | <problem> | <impact> | <evidence> | <next action> | Open / Closed |
 
 ## 4. 恒久的な事実
 
@@ -46,13 +46,12 @@
 
 複数回観測したパターン、または将来に明確な価値がある重大なパターンだけを記録する。
 
-- **PATTERN-001** — Claude経由のCodex実行でPowerShell 7起動が不安定になる
-  症状: Codexプロセスは生存し、`Responding=True`でもCPU使用時間・ログ・worktreeに変化がない。
-  原因: ClaudeからWindows版Codexを起動する経路で、PowerShell 7のプロセス生成またはCodex一時ディレクトリの権限処理が失敗している可能性がある。根本原因は環境依存のため、未確定とする。
-  再発防止: 起動直後に対象worktreeで`Get-Location`と`Get-ChildItem -Force`だけを実行するsmoke testを行う。3分間隔でプロセス、出力時刻、worktreeを確認し、3回連続で進展がなければCodexと監視を停止する。`Windows error 1312`、`CreateProcessAsUserW failed`、PowerShell起動失敗が2回発生した場合は即時に環境障害として扱う。
-  復旧策: `%USERPROFILE%\.codex\tmp`のユーザー権限を確認・修復し、改善しなければ同じworktreeをWSL2側から実行する。
-  証拠: `codex exec -C "$PWD" --sandbox workspace-write`によるClaude経由の実行で発生。直接PowerShellからのread-only smoke testは成功した。
-  最終確認日: 2026-07-25
+- **PATTERN-<NNN>** — <recurring bug pattern>
+  症状: <symptoms>
+  原因: <verified cause or explicitly unconfirmed inference>
+  再発防止: <prevention>
+  証拠: <source, command, or observation>
+  最終確認日: <YYYY-MM-DD>
 
 ## 7. 解決済みまたは置き換え済みの項目
 

@@ -10,7 +10,9 @@ The format follows Keep a Changelog, and version numbers follow Semantic Version
 
 ### Changed
 
-- `docs/HANDOFF.md`に、Claude経由のCodexで発生するWindows PowerShell 7起動問題と停止・復旧手順を記録。
+- Clarified public-template usage and the read-only scope of the ChatGPT GitHub app in `README.md`.
+- Replaced environment-specific handoff incidents with reusable placeholders in `docs/HANDOFF.md`.
+- Sanitized the example local path in `tools/NEW_PROJECT.md`.
 
 ### Fixed
 
