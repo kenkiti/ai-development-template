@@ -1,10 +1,10 @@
-# CLAUDE.md
+# AGENTS.md
 
 Cross-agent entry point for this repository. Keep this file short. The detailed workflow lives in `docs/DEVELOPMENT.md`.
 
 ## Read before changing tracked files
 
-1. Read `AGENTS.md` for project-specific commands, constraints, environment notes, and Git workspace values.
+1. Read `CLAUDE.md` for project-specific commands, constraints, environment notes, and Git workspace values.
 2. Read `docs/DEVELOPMENT.md` for the implementation, review, verification, Git, and reporting workflow.
 3. Read the relevant sections of `DESIGN.md` and `docs/HANDOFF.md`.
 4. Read applicable decisions in `docs/ADR/` and evidence in `docs/research/` when the task depends on them.
@@ -12,10 +12,10 @@ Cross-agent entry point for this repository. Keep this file short. The detailed 
 ## Default operating contract
 
 - Development is serial unless the user explicitly requests parallel work.
-- One implementation task uses one branch, one worktree, and one Claude Code session.
+- One implementation task uses one branch, one worktree, and one Codex thread.
 - Inspect existing branches and worktrees before creating anything.
-- Reuse the existing branch, worktree, and Claude Code session for the same task.
-- A failed review does not justify creating a replacement branch, worktree, or implementation session.
+- Reuse the existing branch, worktree, and Codex thread for the same task.
+- A failed review does not justify creating a replacement branch, worktree, or implementation thread.
 - Preserve unrelated user changes and avoid destructive Git operations.
 - Continue autonomously for safe, reversible, in-scope work.
 - Stop only under the escalation conditions defined in `docs/DEVELOPMENT.md`.
@@ -23,9 +23,9 @@ Cross-agent entry point for this repository. Keep this file short. The detailed 
 
 ## Role boundary
 
-- **Codex** orchestrates repository state, worktrees, delegation, verification, documentation, and commits; push remains user-controlled.
-- **Claude Code** implements the assigned scope and performs the first review of its own final diff in the same session.
-- Claude Code must not create, switch, merge, rename, or delete branches or worktrees.
+- **Claude Code** orchestrates repository state, worktrees, delegation, verification, documentation, and commits; push remains user-controlled.
+- **Codex** implements the assigned scope and performs the first review of its own final diff in the same thread.
+- Codex must not create, switch, merge, rename, or delete branches or worktrees.
 
 ## Evidence rule
 
@@ -37,4 +37,4 @@ Do not report an implementation task as complete until the Definition of Done an
 
 ## Instruction precedence
 
-Follow explicit user instructions first, then `AGENTS.md`, then `docs/DEVELOPMENT.md`, then this summary. When instructions conflict or no safe reversible action remains, stop the affected action and report the conflict instead of guessing.
+Follow explicit user instructions first, then `CLAUDE.md`, then `docs/DEVELOPMENT.md`, then this summary. When instructions conflict or no safe reversible action remains, stop the affected action and report the conflict instead of guessing.

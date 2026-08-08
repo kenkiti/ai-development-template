@@ -1,10 +1,10 @@
-# AGENTS.md
+# CLAUDE.md
 
-Project-specific guidance for Codex in this repository.
+Project-specific guidance for Claude Code in this repository.
 
-Shared development workflow: `docs/DEVELOPMENT.md`
+Shared development workflow: @docs/DEVELOPMENT.md
 
-Read `CLAUDE.md` before modifying tracked files. Keep this file project-specific and minimal. Do not duplicate the shared workflow here.
+Read `AGENTS.md` before modifying tracked files. Keep this file project-specific and minimal. Do not duplicate the shared workflow here.
 
 ## Project
 
@@ -83,6 +83,6 @@ Delete this section when no repository-specific pitfalls exist.
 - `docs/ADR/` — accepted architecture decisions. Supersede decisions instead of silently rewriting history.
 - `docs/HANDOFF.md` — current status, verification evidence, unresolved issues, and durable learning.
 - `docs/research/` — dated investigations and evidence supporting decisions.
-- `CLAUDE.md` — short cross-agent entry point.
+- `AGENTS.md` — short cross-agent entry point.
 - `docs/DEVELOPMENT.md` — source of truth for the shared development workflow.
 - `<entry-point file>` — <why this is the fastest code entry point>
